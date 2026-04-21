@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_core.prompts import PromptTemplate
@@ -61,7 +62,7 @@ Answer:"""
         print(">> Please set it via `os.environ[\"GOOGLE_API_KEY\"] = \"your_token\"`\n")
 
     chat_model = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-lite",
         temperature=0.1
     )
     
@@ -78,13 +79,12 @@ Answer:"""
     return answer
 
 if __name__ == "__main__":
+    load_dotenv()
+    
     DATA_DIR = os.path.join(os.path.dirname(__file__), "raw_data")
     DB_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
     
     # build_vector_database(DATA_DIR,DB_DIR)
-
-    # To run this script natively, add your Google API key here (get it from Google AI Studio):
-    os.environ["GOOGLE_API_KEY"] = "AIzaSyAKK78x19SfV6gGAj_tUwWYL-je33dBcnQ" # Replace with your actual key
     
     test_query = "What are the importance of energy trading?"
     
