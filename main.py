@@ -1,6 +1,7 @@
 import os
 from rag_pipeline import run_rag_pipeline
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
@@ -11,6 +12,15 @@ app = FastAPI(
     title="Energy Market RAG API",
     description="A FastAPI backend for querying the Energy Market Knowledge Assistant.",
     version="1.0.0"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For development, allow all. In production, restrict to specific domains.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Pydantic models for request and response validation
