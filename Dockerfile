@@ -1,5 +1,5 @@
 # Use Python 3.12 slim image
-FROM python:3.12-slim as builder
+FROM python:3.12-slim AS builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -14,8 +14,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Add poetry to PATH
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-# Install system dependencies
-RUN apt-get update \
+# Install system dependencies with cache mounting
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --no-install-recommends -y \
     curl \
     build-essential
@@ -29,11 +31,13 @@ WORKDIR $PYSETUP_PATH
 # Copy poetry files
 COPY pyproject.toml poetry.lock ./
 
-# Install dependencies
-RUN poetry install --no-root --only main
+# Install dependencies with cache mounting for faster rebuilds
+RUN --mount=type=cache,target=/root/.cache/pypoetry \
+    --mount=type=cache,target=/root/.cache/pip \
+    poetry install --no-root --only main
 
 # --- Final Image ---
-FROM python:3.12-slim as production
+FROM python:3.12-slim AS production
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -54,4 +58,4 @@ COPY . .
 EXPOSE 8000
 
 # Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

@@ -10,6 +10,7 @@ services:
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
+      - .:/app
       - ./chroma_db:/app/chroma_db
       - ./raw_data:/app/raw_data
     restart: always
@@ -18,10 +19,15 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        - VITE_API_URL=http://localhost:8000
     ports:
-      - "80:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev -- --host
     depends_on:
       - backend
     restart: always

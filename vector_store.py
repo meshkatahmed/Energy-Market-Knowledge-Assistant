@@ -67,12 +67,12 @@ if __name__ == "__main__":
     DB_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
     
     os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(DB_DIR, exist_ok=True)
+
+    print(f"Vector store utilities are ready. Add some documents to '{DATA_DIR}'")
     
     # 1. Build the DB (Uncomment to rebuild when adding new docs)
     build_vector_database(DATA_DIR, DB_DIR)
     
     # 2. Example Query (Uncomment to test querying)
     query_vector_database("What is Media Soft?", DB_DIR)
-    
-    print(f"Vector store utilities are ready. Add some documents to '{DATA_DIR}'")
-    print("Then open this script and uncomment 'build_vector_database' to build your DB.")
