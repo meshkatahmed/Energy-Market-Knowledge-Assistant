@@ -5,4 +5,9 @@ from app.main import app
 import uvicorn
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    # Development mode with auto-reload enabled. 
+    # Use this during development for faster feedback.
+    # uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+
+    # Production mode without auto-reload.
+    uvicorn.run(app, host="0.0.0.0", port=8000)

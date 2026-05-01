@@ -2,32 +2,51 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile
+      # dockerfile: Dockerfile
     ports:
       - "8000:8000"
     env_file:
       - .env
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-    volumes:
-      - .:/app
-      - ./app/data/chroma_db:/app/app/data/chroma_db
-      - ./app/data/raw_data:/app/app/data/raw_data
+      - HFHUB_API_TOKEN=${HFHUB_API_TOKEN}
+    develop:
+      watch:
+        - path: ./pyproject.toml
+          action: rebuild
+        - path: ./poetry.lock
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
     restart: always
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      # dockerfile: Dockerfile
     ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - "80:80"
+    develop:
+      watch:
+        - path: ./frontend/dist
+          target: /usr/share/nginx/html
+          action: sync
     environment:
-      - VITE_API_URL=http://localhost:8000
-      - CHOKIDAR_USEPOLLING=true
-    command: npm run dev -- --host
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
     depends_on:
       - backend
     restart: always
+
+
+# volumes:
+    #   - .:/app
+    #   - ./app/data/chroma_db:/app/app/data/chroma_db
+    #   - ./app/data/raw_data:/app/app/data/raw_data
+
+# volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules
+
+# - CHOKIDAR_USEPOLLING=true
+# command: npm run dev -- --host

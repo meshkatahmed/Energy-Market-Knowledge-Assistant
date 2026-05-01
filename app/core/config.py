@@ -23,6 +23,7 @@ class Settings:
     EMBEDDING_PROVIDER: str = os.environ.get("EMBEDDING_PROVIDER", "fastembed")
     
     GOOGLE_API_KEY: str = os.environ.get("GOOGLE_API_KEY")
+    HFHUB_API_TOKEN: str = os.environ.get("HFHUB_API_TOKEN")
     
     # Model Configs
     CHAT_MODEL_NAME: str = "gemini-2.5-flash-lite"
