@@ -26,10 +26,10 @@ jobs:
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-backend:latest
       
-      - name: Deploy to Railwaay
+      - name: Deploy to Railway
         uses: bervProject/railway-deploy@main
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          PROJECT_TOKEN: ${{ vars.PROJECT_TOKEN }}
+          PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}
         with:
           service: ${{ vars.RAILWAY_SERVICE_NAME }}
