@@ -30,6 +30,6 @@ jobs:
         uses: bervProject/railway-deploy@main
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        with:
           PROJECT_TOKEN: ${{ vars.PROJECT_TOKEN }}
+        with:
           service: ${{ vars.RAILWAY_SERVICE_NAME }}
