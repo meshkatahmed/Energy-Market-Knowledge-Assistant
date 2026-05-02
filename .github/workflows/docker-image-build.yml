@@ -31,5 +31,4 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         with:
-          project: ${{ vars.RAILWAY_PROJECT_NAME }}
           service: ${{ vars.RAILWAY_SERVICE_NAME }}
