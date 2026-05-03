@@ -33,7 +33,7 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        run: railway service update ${{ vars.RAILWAY_SERVICE_ID }} --image ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-backend:latest
+        run: railway redeploy --service ${{ vars.RAILWAY_SERVICE_ID }} --image ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-backend:latest
         env: 
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
          
