@@ -30,7 +30,8 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        run: railway up --project ${{ vars.RAILWAY_PROJECT_NAME }} --service  ${{ vars.RAILWAY_SERVICE_NAME }}
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --project ${{ vars.RAILWAY_PROJECT_NAME }} --environment production --service ${{ vars.RAILWAY_SERVICE_NAME }} 
+        env: 
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }} 
+         
         
