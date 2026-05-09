@@ -36,7 +36,7 @@ RUN npm install
 
 # Set environment variable for API URL (can be overridden at runtime)
 ARG VITE_BACKEND_URL
-ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL # Included "https://"
 
 # Copy the rest of the application code
 COPY . .
