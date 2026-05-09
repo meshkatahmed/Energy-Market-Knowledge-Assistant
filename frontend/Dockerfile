@@ -34,7 +34,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Set environment variable for API URL include "https://"
+# Set environment variable for API URL included "https://"
 ARG VITE_BACKEND_URL
 ENV VITE_BACKEND_URL=$VITE_BACKEND_URL 
 

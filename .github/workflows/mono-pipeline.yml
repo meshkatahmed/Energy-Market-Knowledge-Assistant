@@ -1,5 +1,4 @@
-name: Monorepo CI/CD for Frontend & Backend with Conditional Build & Push
-# Deployments to Railway
+name: Monorepo CI/CD for Frontend & Backend with Conditional Deployments to Railway
 
 on:
   push:
@@ -58,18 +57,18 @@ jobs:
             VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }} # Included "https://"
       
       # Deploy Frontend to Railway
-      # - name: Install Railway CLI
-      #   run: npm install -g @railway/cli
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
          
-      # - name: Link Railway Project
-      #   run: railway link --project ${{ vars.RAILWAY_PROJECT_ID }} --environment production
-      #   env:
-      #     RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+      - name: Link Railway Project
+        run: railway link --project ${{ vars.RAILWAY_PROJECT_ID }} --environment ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+        env:
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
-      # - name: Deploy/Redeploy Railway Service
-      #   run: railway redeploy --service ${{ vars.RAILWAY_FRONTEND_SERVICE_ID }} --yes
-      #   env: 
-      #     RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+      - name: Deploy/Redeploy Railway Service
+        run: railway redeploy --service ${{ vars.RAILWAY_FRONTEND_SERVICE_ID }} --yes
+        env: 
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
   # Build and Deploy Backend (only if there are changes in backend or root)
   deploy-backend:
@@ -98,15 +97,15 @@ jobs:
           tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-backend:latest
       
       # Deploy Backend to Railway
-      # - name: Install Railway CLI
-      #   run: npm install -g @railway/cli
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
 
-      # - name: Link Railway Project
-      #   run: railway link --project ${{ vars.RAILWAY_PROJECT_ID }} --environment production
-      #   env: 
-      #     RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+      - name: Link Railway Project
+        run: railway link --project ${{ vars.RAILWAY_PROJECT_ID }} --environment ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+        env: 
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
-      # - name: Deploy/Redeploy Railway Service
-      #   run: railway redeploy --service ${{ vars.RAILWAY_BACKEND_SERVICE_ID }} --yes
-      #   env: 
-      #     RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+      - name: Deploy/Redeploy Railway Service
+        run: railway redeploy --service ${{ vars.RAILWAY_BACKEND_SERVICE_ID }} --yes
+        env: 
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
