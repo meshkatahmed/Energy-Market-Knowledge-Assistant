@@ -189,7 +189,9 @@ const App: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = import.meta.env.VITE_BACKEND_URL; 
+      console.log('Using API URL:', apiUrl);
+      // || 'http://localhost:8000';
       const res = await fetch(`${apiUrl}/api/v1/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

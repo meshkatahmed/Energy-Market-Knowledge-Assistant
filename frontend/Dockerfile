@@ -21,6 +21,7 @@
 
 
 
+
 # --- Build Stage ---
 FROM node:20-alpine AS BUILD
 
@@ -33,12 +34,12 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Set environment variable for API URL (can be overridden at runtime)
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+
 # Copy the rest of the application code
 COPY . .
-
-# Set environment variable for API URL (can be overridden at runtime)
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
 
 # Build the application
 RUN npm run build
