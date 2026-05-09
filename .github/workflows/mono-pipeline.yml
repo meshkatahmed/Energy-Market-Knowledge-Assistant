@@ -55,7 +55,7 @@ jobs:
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-frontend:latest
           build-args: 
-            VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }}
+            VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }} # Included "https://" in 
       
       # Deploy Frontend to Railway
       # - name: Install Railway CLI
