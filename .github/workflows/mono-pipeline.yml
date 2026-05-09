@@ -54,6 +54,8 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-frontend:latest
+          build-args: 
+            VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }}
       
       # Deploy Frontend to Railway
       # - name: Install Railway CLI
