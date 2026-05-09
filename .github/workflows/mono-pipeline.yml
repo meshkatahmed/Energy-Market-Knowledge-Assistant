@@ -64,7 +64,7 @@ jobs:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
       - name: Deploy/Redeploy Railway Service
-        run: railway redeploy --service ${{ vars.RAILWAY_FRONTEND_SERVICE_ID }} --yes
+        run: railway deploy --service ${{ vars.RAILWAY_FRONTEND_SERVICE_ID }} --yes
         env: 
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
@@ -104,6 +104,6 @@ jobs:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
       - name: Deploy/Redeploy Railway Service
-        run: railway redeploy --service ${{ vars.RAILWAY_BACKEND_SERVICE_ID }} --yes
+        run: railway deploy --service ${{ vars.RAILWAY_BACKEND_SERVICE_ID }} --yes
         env: 
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
